@@ -16,8 +16,6 @@ An interactive resume chatbot. Ask about my career, engineering projects, skills
 
 ## Example questions
 
-- What AI and agent projects have you built?
-- Tell me about your experience at Expedia.
 - What technologies do you work with?
 - How can I get in touch with you?
 
