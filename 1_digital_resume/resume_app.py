@@ -124,7 +124,11 @@ If the user is engaging in discussion, try to steer them towards getting in touc
         return system_prompt
 
     def chat(self, message, history):
-        messages= [{"role":"system", "content":self.system_prompt()}] + history + [{"role":"user", "content": message}]
+        messages = (
+            [{"role": "system", "content": self.system_prompt()}]
+            + normalize_history(history)
+            + [{"role": "user", "content": message}]
+        )
         done = False
         while not done:
             response= self.openai.chat.completions.create(model="gpt-4.1-mini", messages=messages, tools=tools)
@@ -139,24 +143,90 @@ If the user is engaging in discussion, try to steer them towards getting in touc
         return response.choices[0].message.content
 
     
+APP_DIR = os.path.dirname(os.path.abspath(__file__))
+
+THEME = gr.themes.Soft(
+    primary_hue="indigo",
+    secondary_hue="slate",
+    font=gr.themes.GoogleFont("Inter"),
+).set(
+    body_background_fill="#f8fafc",
+    block_title_text_weight="600",
+)
+
+CUSTOM_CSS = """
+.gradio-container {
+    max-width: 920px !important;
+    margin: auto !important;
+}
+.hero-header {
+    text-align: center;
+    padding: 1.5rem 1rem 0.5rem;
+}
+.hero-header h1 {
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+.hero-header p {
+    color: var(--body-text-color-subdued);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+"""
+
+EXAMPLE_QUESTIONS = [
+    "What technologies do you work with?",
+    "How can I get in touch with you?",
+]
+
+
+def normalize_history(history):
+    """Convert Gradio 6 message blocks to plain strings for the OpenAI API."""
+    normalized = []
+    for message in history:
+        content = message["content"]
+        if isinstance(content, list):
+            text_parts = [
+                block["text"]
+                for block in content
+                if isinstance(block, dict) and block.get("type") == "text"
+            ]
+            content = "\n".join(text_parts)
+        normalized.append({"role": message["role"], "content": content})
+    return normalized
+
+
+def create_demo(resume: ResumeApp):
+    avatar_path = os.path.join(APP_DIR, "me", "avatar.png")
+    chatbot_kwargs = {"buttons": ["copy"]}
+    if os.path.exists(avatar_path):
+        chatbot_kwargs["avatar_images"] = (None, avatar_path)
+
+    with gr.Blocks(title="Chat with Parul") as demo:
+        gr.Markdown(
+            f"""
+            <div class="hero-header">
+                <h1>Hi, I'm {resume.name} 👋</h1>
+                <p>
+                    Ask me about my background, AI engineering work, and experience building
+                    production agent systems. Leave your email if you'd like to connect.
+                </p>
+            </div>
+            """,
+        )
+        gr.ChatInterface(
+            resume.chat,
+            chatbot=gr.Chatbot(**chatbot_kwargs),
+            textbox=gr.Textbox(placeholder="Ask about my career, skills, or projects…"),
+            examples=EXAMPLE_QUESTIONS,
+            fill_height=True,
+        )
+    return demo
+
+
 if __name__ == "__main__":
-    resume=ResumeApp()
-    # type="messages" tells Gradio’s ChatInterface how to shape the history argument passed into your chat function.
-    # With type="messages", each turn is a dict with role ("user" or "assistant") and content (string, or richer types for multimodal).
-    gr.ChatInterface(resume.chat).launch()
-
-
-# What Gradio still passes
-# Even with type="messages", your function signature stays the same:
-
-# message — the new user input (a str in your case)
-# history — prior turns as message dicts (not including the new message; Gradio adds that separately)
-# You return a plain string; Gradio turns that into an assistant message in the UI.
-
-# Bottom line: type="messages" wires Gradio’s chat history to the same structure 
-# you send to the OpenAI Chat Completions API, so history can be spliced into messages on line 128 without conversion.
-
-
-    
-
+    resume = ResumeApp()
+    create_demo(resume).launch(theme=THEME, css=CUSTOM_CSS)
 
