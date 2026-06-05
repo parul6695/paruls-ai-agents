@@ -1,0 +1,37 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# UV / tooling
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# OS
+.DS_Store
+
+# Local databases and runtime artifacts
+*.db
+*.db-shm
+*.db-wal
+memory.db*
+
+# Crew / agent output (add project-specific paths as you go)
+**/output/

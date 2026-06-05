@@ -1,0 +1,516 @@
+Parul — AI engineer building autonomous agent systems (multi-agent orchestration, tool use, RAG, and production-style integrations).
+
+Innovative AI & Software Engineer with experience in GenAI, LLMs, Cloud, and DevOps. Passionate about building scalable AI-driven applications, optimizing data pipelines, and integrating AI with enterprise systems. 
+Experienced in Python, Java, Microservices, Cloud (Azure, AWS), and AI orchestration.
+Proven track record in AI automation, API development, and AI-powered solutions, reducing manual effort by 50% and enhancing system efficiency. 
+Passionate about AI innovation, large-scale system design, and solving complex engineering challenges. Always exploring cutting-edge AI technologies to drive business impact.
+
+My Job History : Latest to Oldest : 
+
+Expedia Group, Seattle, US - Software Development Engineer II October 2022 – Present
+
+Points from Resume:
+•	Developed scalable finance engineering solutions supporting $80B in payments and modernized revenue recognition from an accrual-based model to a daily engine, improving reliability, scalability, and timeliness of accounting and reporting workflows.
+•	Built a RAG and LLM-powered conversational agent for Programmatic Access, automating responses to financial data queries and FAQs, reducing human support by 70% and enabling self-service access to EPM planning, forecasting, and actuals data.
+•	Engineered Spark ETL pipelines to process finance data end to end and productionalized 8 finance data integration pipelines for Oracle Enterprise Performance Management (EPM).
+•	Integrated LLM-based summarization pipeline, implemented chunking optimization, and built a chatbot interface for live querying accelerating data insights and stakeholder decision-making.
+•	Enhanced Accounting services to handle duplicity and reducing operational costs by up to 40%.
+•	Designed a finance data platform from scratch, onboarded 3 Spark batch applications to EMR with Airflow and CI/CD, and stabilized 15+ pipelines through tuning, monitoring, and PagerDuty integration.
+
+
+• As a member of the Expedia Finance Engineering team, responsibilities include development and
+implementation of advanced solutions aimed at enabling seamless payments totaling $80 billion.
+• Contributed to Balance Management team in designing and building scalable services where Expedia changed
+their revenue recognition system from being an accrual system to a daily revenue recognition engine.
+• Working on constructing robust data pipelines, leveraging Kafka streaming with Spark processing. Through these pipelines, I facilitate the efficient ETL of data, ensuring its seamless flow.
+• Enhanced Accounting business service to publish any missing data and cost reduction upto 40%.
+
+
+AWS, Amazon.com Inc, Seattle, US - Software Development Engineer : July 2021 – October 2022
+
+Points from Resume:
+•	Built scalable Java microservices for Amazon RDS team, improving reliability of resource provisioning workflows across AWS infrastructure. Customized AWS APIs to support and restrict request parameters, strengthening service controls for internal and customer-facing workflows.
+•	Automated KMS and S3 permission validation, consolidated customer-visible error messaging, and cut debugging time by 70% for provisioning failures.
+•	Built a Spring Boot integration test framework for Scale Storage APIs used in Amazon RDS instance creation, increasing test coverage to 85% and improving release confidence.
+
+
+• Worked with Relational Database Service team, designing and building scalable systems with Java
+microservices. 
+Customized AWS APIS to block and support certain parameters.
+
+Viterbi Admission & Student Engagement, University of Southern California, CA, US - Data Analyst June 2020 – April 2021
+• Designed and maintained Viterbi’s graduate student websites using WordPress, HTML and CSS.
+• Automated matching process of mentees with mentors via python scripts and provided trends via data analysis
+
+Accenture, Gurugram, India - Software Engineer : September 2016 - July 2019
+• Took care of Infrastructure – Data Center, Network & Server Monitoring & 1st level of troubleshooting.
+• Coordinated with forty team members to build application that recommends Machine Learning Models as per data.
+
+
+Humming Bird Edu. Ltd, Delhi, India - Software Developer Intern : January 2016 - April 2016
+• Built Web Based ERP Software System on .Net MVC framework.
+• Worked on modules: Email/SMS sender, Student Registration, database design using SQL.
+LASTEC Dept., DRDO, Metcalfe House, Delhi (Software Developer Intern) June 2015 – August 2015
+• Created software application in C# for security enhancement of laser based system. Automated validation of GPS data.
+
+
+
+My Work Summary extracted from yearly Goals in Expedia:
+
+2026- present:
+
+New Goals for jan-june 2026:
+
+1.	FXN Pipeline EPM Cloud Integration
+
+Successful delivery of FXN pipeline for EPM Cloud by migrating Stored procedures as new dataset integrations, leveraging AI-generated task templates with manual customization, building ETL automation, and completing stored procedure logic in the test environment within the planned March–April timeline in TEST Env.
+
+Actions and metrics:
+Milestone -1 :
+Prepare the template task using AI agent Claude Sonnet 4.6
+Extract the data from respective SQL Server
+Milestone -2 :
+Developing the ETL pipeline.
+Optimization in terms of building efficient hive tables to just have relevant columns and using the less number of tables if possible for multiple store procedures.
+Milestone -3 :
+Implementing ingestion and calculation logic for these stored procedures:
+SP_FinRptg_FXN_Process_Stats_DM_Book
+SP_FinRptg_FXN_Process_Stats_DM_Fees_Book
+SP_FinRptg_FXN_Process_Revenue_101001HC
+
+
+
+Action
+•	leveraged AI to generate task templates and manually customized them to meet FXN pipeline requirements
+•	developed the ETL pipeline to support ingestion of new datasets into EPM Cloud
+•	automated key parts of the pipeline to reduce manual effort and improve repeatability
+•	completed historical data migration needed to support downstream finance processing
+•	implemented the full data ingestion and calculation logic for:
+o	stats DM book processing across all LOBs
+o	fee statistics DM book processing
+o	Hotel Commerce revenue processing
+•	executed and completed this implementation in the test environment from late March through late April
+Result
+As a result, I successfully completed the FXN pipeline implementation in the test environment within one month, enabling automated ingestion and calculation processing for three critical finance reporting stored procedures. This improved the readiness of the FXN pipeline for validation and downstream reporting by establishing a stronger, more scalable foundation for EPM Cloud data integration.
+Short Manager-Ready Version
+Successfully delivered FXN pipeline enhancements for EPM Cloud by leveraging AI-generated task templates with manual customization, building ETL automation, supporting historical data migration, and implementing end-to-end ingestion and calculation logic for three critical finance reporting stored procedures in the test environment between late March and late April. This work improved automation, reduced manual setup effort, and strengthened the pipeline’s readiness for downstream finance reporting and validation.
+
+
+
+GOAL 2:
+
+Drive cost transparency and optimization for the epm-data-processing application by conducting a detailed Jan–Apr 2026 cost analysis, identifying the top cost drivers across resources and pipelines, and highlighting gaps in cost attribution to improve reporting and support data-driven optimization decisions.
+
+Actions and metrics
+
+As epm-data-processing usage grew, there was a need to better understand processing costs, identify where spend was concentrated, and uncover gaps that limited accurate cost attribution and reporting.
+Milestone 1: 
+Conducted a detailed cost analysis for the epm-data-processing application covering January through April 2026
+Milestone 2 : 
+Identified the top cost drivers by both resource and pipeline to pinpoint the largest contributors to spend
+Milestone 3 : 
+Analyzed current cost tracking and documented gaps that were limiting accurate attribution and reporting.
+Prepared the findings to support team discussion and guide next steps for cost optimization and improved reporting
+
+Result
+As a result, I created a clear view of where epm-data-processing costs were concentrated, surfaced key gaps in cost tracking, and enabled more informed team discussions on attribution, reporting improvements, and future cost optimization opportunities.
+
+Short Manager-Ready Version
+Completed a detailed Jan–Apr 2026 cost analysis for the epm-data-processing application by identifying top cost drivers across resources and pipelines and highlighting gaps in cost tracking for better attribution and reporting. This work improved cost visibility and provided a stronger basis for team discussions on optimization and reporting improvements.
+
+Goal 3:
+1. FJE Integration — Completeness & Correction
+Status:  Completed
+·      Added FJE data load DAG support in both test and prod environments with end-to-end testing
+·      Loaded data as per new URL updates for COA Mapper and production Oracle instance
+·      Fixed FJE S3 output folder path to route correctly based on environment (sit → /Test/..., prod → /...)
+·      Ensured pipeline runs reliably against the correct EPM prod instance
+
+
+Career goal:
+Complete AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents Udemy Course
+Action and metrics:
+AI Engineer Core Track: LLM Engineering, RAG, QLoRA, Agents
+Milestone 1: Complete the above Course
+Milestone 2: Identify the areas where we can integrate AI agents in EPM project
+
+
+
+2025-2026:
+
+Goal Complete Certification : AWS Certified Solutions Architect - Associate 
+Actions and Metrics 
+Milestone 1 : Complete preparation materials for AWS Certified Solutions Architect - Associate and give the exam 
+Milestone 2: Appear for the Exam
+Outcome summary:
+Passed the AWS certification linked here : AWS Certified Solutions Architect – Associate This badge was issued to Parul gupta Date issued: August 08, 2025 Expires: August 08, 2028 demonstrating proficiency in AWS cloud architecture and services. Key Accomplishments: Thoroughly prepared for the certification using comprehensive study materials, gaining in-depth knowledge of AWS services and best practices. • Successfully passed the AWS Certified Solutions Architect - Associate exam, validating expertise in designing distributed systems on AWS. • Applied newly acquired AWS knowledge directly to the EPM project, significantly enhancing project capabilities and efficiency. • Practical Application in EPM Project: Leveraged AWS expertise to implement cross-region and cross-account access solutions, crucial during ownership transfers within the project for FAH actuals pipeline specifically . • Successfully established and tested production connectivity to the FP&A folders (PROD and Shadow), a critical task assigned post-certification. • • Implemented secure finance data flows between two AWS production accounts: 1. One owned by the FP&A team 2. One owned by our team • Ensured robust security measures by: 1. Separating test and production ARN AWS roles provisioning 2. Enabling secure access for EPM jobs to process data from the FP&A folder
+3. Implementing data transfer to the project's S3 bucket 4. Setting up archiving processes in S3 for future reference and compliance And Hence, Demonstrated ability to apply theoretical knowledge to realworld scenarios. • This certification not only represents my personal professional growth but has also directly contributed to understanding of EPM project's cloud infrastructure, security, and data processing capabilities that are dependent on AWS.
+
+Goal EG ML Platform: Generative AI Tools & Case Studies 
+Actions and Metrics 
+Milestone 1 : • Completed this in person training to understand the 
+Milestone 2 : • Usage in current project
+Outcomes Summary Successfully completed in-person training on the advanced machine learning platform: ht tps://ml-platform-chat-ui.rcp.us-east-1.data.corp.exp-aws.net/. This training provided: • Understanding of this EG's ML platform's capabilities and functionalities • Expertise in matching appropriate ML models to specific use cases • Hands-on experience with cutting-edge ML tools and techniques Practical Application in Project: Utilized the platform extensively for technical content summarization, enhancing documentation efficiency and clarity • Leveraged it to design and optimize UI elements for the Splunk dashboard, improving user experience and functionality
+
+Goal EPM Cloud Integration through ETL Pipeline Development, Automation and Historical Data Migration. 
+Actions and Metrics
+Milestone -1 : • Extract the data from respective SQL Server • Load it to OIC SFTP Folder • Run it through the latest COA Mapper using OIC
+• Transform the results to match destination format 
+Milestone -2 : • Load the outcome to EPM • Job scheduling via Airflow Milestone -3 : • Track job for failures and performance
+
+Outcomes Summary Successfully developed, delivered and enhanced multiple critical ETL pipelines, including Hyperion Timing Cards, PLS Timing Card, Hyperion Adjusted Actuals, FAH Actuals, and FJE. Demonstrated strong adaptability by taking ownership of partially developed pipelines, completing their development, and successfully transitioning them to production. Key Accomplishments: Productionalized pipelines by creating necessary Airflow DAGs and hive tables in EGDL which were missing initially in FAH and FJE. • Established production connectivity for FAH data in the FP&A folder, navigating complex access requirements to be access by our EPM project product’s AWS account. • Modified and optimized the FAH and FJE pipeline after assuming ownership, improving its efficiency and reliability as it was failing initially due to spark misconfiguration. • Improved data accuracy and pipeline efficiency by segregating Hyperion adjusted actuals tasks from the main Hyperion pipeline, effectively addressing missing account/MUs overlaps. • Consistently met delivery timelines while working independently on multiple high-priority integrations.
+
+Goal Splunk Dashboard in Prod and Test Environment for EPM Data Pipelines Monitoring leveraging AI to design dashboard UI
+Actions and Metrics
+Milestone -1 : • Identify key log sources from EPM data load jobs (status, errors, timestamps). • Build a Git repository for Splunk dashboard to make it publicly available 
+Milestone - 2: • Integrate EPM logs and metadata into Splunk using existing forwarders or APIs. Design a Splunk dashboard with Filters by job type and environment using AI for XML panels and components designing. 
+• Milestone - 3: Collaborate with stakeholders (EPM team, Other Developers) to validate and refine dashboard views. • • Provide documentation and KT to add logs in specific format and dashboard usage.
+Outcomes Summary Successfully developed and implemented a comprehensive Splunk Dashboard for EPM Data Pipelines Monitoring in both Production and Test environments linked here, leveraging AI for dashboard UI design. This project significantly enhanced visibility and monitoring capabilities for EPM data load jobs. Identified and integrated critical log sources from EPM data load jobs, including status, errors, post and pre load Amounts, input and output record accounts, critical exceptions, job duration. • Established a separate Git repositories for test and prod for the Splunk dashboard, ensuring public availability and version control. • Designed an intuitive Splunk dashboard by job type and environment, utilizing AI for efficient XML panel and component design. • Collaborated with our EPM team and developers, to validate and refine dashboard views, ensuring usability and relevance. • Created comprehensive documentation detailing specific log formatting requirements and dashboard usage guidelines for other members to onboard their jobs in Test and Prod splunk Dasboard. • Conducted a thorough overview session with team members, facilitating knowledge transfer and promoting effective utilization of the new monitoring tool to validate the end to end run of pipeline. • Below are the links for the Splunk Dashboard created and documentation: 1. PROD dashboard 2. Test Dashboard 3. EPM Integration Jobs Splunk Dashboard Overview and Onboarding Doc
+
+Goal Training and Certification: Oracle Cloud EPM Data Integration 2024 Implementation Certified Professional 
+Actions and Metrics 
+Milestone 1 : • Complete this 4 hr training  • Become a Certified Oracle Cloud EPM Data Integration Implementer - Oracle MyLearn 
+Milestone 2 : • Oracle Cloud EPM Data Integration 2024 Implementation Certified Professional https://education.oracle.com/oracle-cloud-epm-data-integration-2024-certified-implementat ion-professional/trackp_EPMDI2024OCP
+
+Outcomes Summary 
+Completed a comprehensive 4-hour training program, gaining an overview of EPM systems. • Enhanced ability to run pipelines smoothly and efficiently, leveraging newly acquired knowledge and best practices. • Developed skills in detecting and diagnosing potential issues in integration and pipeline run failures, such as identifying missing dimensions and values. • Improved communication and collaboration with the Deloitte team, enabling more effective reporting and investigation of technical issues. • Strengthened overall expertise in EPM data integration pipeline development, contributing to more robust and reliable pipeline operations.
+
+
+Self Reflection
+Reflecting on your goals and feedback, address in max. 100 words:1. Key outcomes and impact in 3-5 concise bullet points.2. Challenges, learnings or development areas in 2-3 bullet points.
+Question
+Reflecting on your goals and feedback, address in max. 100 words:
+1. Key outcomes and impact in 3-5 concise bullet points.
+2. Challenges, learnings or development areas in 2-3 bullet points.
+Manager
+Answer
+
+You consistently deliver high-impact results through , technical expertise, and collaboration. You successfully delivered the PLS Timing Card integration despite changing requirements and implemented Splunk dashboards to improve logging and visibility. You have done a great job taking the architectural patterns and pipelines designed by Dhimant and developing data pipelines using those patterns. You actively supported team members with the COA mapper, troubleshot connectivity issues, and contributed to process improvements through Splunk dashboard development. Your adaptability, proactive learning, and commitment to professional growth make you a key contributor and a trusted resource for the team. I encourage you to continue investing in and expanding your understanding of planning and forecasting business processes and EPM applications so you can design and execute solutions more quickly. I am excited to see your strong appetite to upskill, take on more ownership and responsibility, and I am happy to partner with you on the next steps in your growth.
+Employee
+Answer
+Key outcomes and impact :
+Cross-team Collaboration and Knowledge Sharing: Successfully guided multiple teams across organizations in understanding and leveraging the COA mapper API, including Insights team(Gisheeno Mathews ands team), Rajesh's team (Had interaction with Praveen Mandali multiple times regarding COA mapper usage), and PLS team. Created comprehensive documentation and provided knowledge transfer sessions, significantly improving cross-functional efficiency.
+Proactive Problem-Solving: Consistently monitored and promptly addressed COA mapper task failures as and when it was down. It is a crucial job to sync the latest mapping data which is in use by different integrations and Insights team.
+Technical Leadership and Mentorship: Provided crucial guidance to team members in understanding the code repository when they onboarded to this project, setting up new integrations, and resolving complex issues like airflow variables version clash between different integrations , code organization for different use cases of SR accounts , MUs in Hyperion data. This mentorship improved team capability and project delivery efficiency.
+Documentation and Process Improvement: Developed comprehensive documentation for COA mapper API usage: COA Mapper API Usage and Overview, enhancing knowledge retention and sharing.
+Enhanced Monitoring and Visibility with Comprehensive Splunk Dashboard: Developed and implemented a sophisticated Splunk dashboard for both Production and Test environments, providing a holistic view of integration processes and data flows. This powerful monitoring tool offers:
+Real-time tracking of integration job statuses across environments
+Detailed insights into data processing metrics, including:Input record counts and total amounts, Error records and Final output statistics including amounts.
+Exceptions monitoring for ongoing jobs
+Comparative analysis between input and output data for integrity checks
+Environment-specific views for targeted monitoring of Production and Test systems
+
+
+Challenges, learnings, and development areas:
+Resolving critical issue under tight deadline and Cross-team Coordination:
+ Successfully resolved multiple critical issues single-handedly, including the recent one:  Channel Hyperion project’s failure where data for November actuals was not getting sync.  Data needs to be there by Friday and issue got attention on Tuesday, deep dived into the issue by myself to find the root cause and reached out to the relevant infra teams Data lake team and Vault team. Demonstrated ability to deep dive into complex problems, coordinate with infrastructure teams, and navigate new guidelines to unblock our critical 12 EGDL tables , ensuring timely data delivery despite challenging circumstances.
+Adaptability and Quick Problem-Solving: Showcased adaptability in high-pressure situations, such as delivering mapping tables for the PLS team’s use case despite schema deployment issues on a weekend, able to deliver it first thing on Monday. Rapidly developed alternative solutions to meet tight deadlines and unblock dependent team on time.
+Rapid Problem-Solving and Technical Adaptability: Demonstrated exceptional technical agility during the recent FAH actuals data testing for the Go/No Go decision. Swiftly addressed an unprecedented scenario of two monthly files for November, quickly implementing and deploying code changes to handle this anomaly while bridge call going on. Successfully loaded the data into the plan allocation environment, resolving unexpected data discrepancies in real-time and ensuring the critical testing phase proceeded without delay.
+
+
+
+Manager Assessment
+Manager
+Rating
+Rating
+Consistently Exceeds
+Rating Details
+Rating Details
+You have demonstrated and exceeded most expectations of a K-level resource. At this level, you are expected to be a consistent performer who applies software engineering principles to business problems, leads small and well-defined projects, supports complex initiatives, and actively identifies inefficiencies in existing systems. You have shown strong progress across these areas.
+
+
+You have successfully:
+Collaborated across teams and functions as part of Project Unity to understand inter dependencies and resolve shared challenges. You also worked closely with FP&A data consumers to share knowledge on the COA mapper and better understand business needs.
+Applied strong technical expertise to design, develop, and test complex solutions, including the COA mapper and PLS Timing Card integration, while following best practices in software design, clean coding, and database principles.
+Demonstrated a solid understanding of data requirements by effectively applying database design concepts.
+Sought input from business users and subject matter experts when needed, and partnered closely with engineering peers to resolve issues efficiently.
+Supported system integration efforts with a good understanding of how different components and systems work together.
+
+
+I encourage you to focus on the following areas to further strengthen your impact:
+Set more ambitious goals beyond standard expectations to demonstrate a strong commitment to excellence and inspire higher performance across the team.
+Accelerate delivery by collaborating more actively to unblock work and seek quick, continuous feedback.
+Continue investing in continuous learning, especially by deepening your business, functional, and technical knowledge of FP&A processes and Oracle EPM. This will help you deliver more complete, end-to-end solutions.
+Provide regular visibility into progress by keeping JIRA updates accurate and timely to support clear communication, faster feedback, and predictable delivery.
+Invest in producing more comprehensive documentation. Clear documentation of designs, solutions, and processes will help the team onboard faster and reduce reliance on individuals.
+
+
+As a next step in your growth, I would like to challenge you to:
+Lead end-to-end delivery of complex projects
+Demonstrate deep technical expertise across EPM technologies
+Design and deliver complex, non-routine solutions
+Proactively identify and resolve system and code inefficiencies
+Influence technical decisions and solution direction
+
+
+
+
+2024-2025
+
+Goal
+Build initial 3 spark batch job applications end to end with new metadata and EMR flavor till airflow dag.
+Actions and Metrics
+Perform end-to-end Application creation for below 3 application, spinnaker pipeline configuration and Airflow integration with Vault paths for TEST and DW  Environment :
+1. finance-analytics-efa-fact-dim-etl
+2. finance-analytics-efa-cdc-compaction-etl
+3. finance-analytics-efa-metadata-etl​
+
+Manager
+Outcomes Summary
+Activity completed in H1-2024.
+I agree, Parul has created the initial application setup and airflow instance on time.
+Employee
+Outcomes Summary
+All three applications are successfully deployed and functional in
+
+Goal
+Complete backup of all 17 EFA Snowflake tables in Iceberg format.
+Actions and Metrics
+1. Create/Correct the missing backup tables in iceberg.
+2. Load the data since inception into iceberg via spark jobs
+3. Verify the count and few sample data for these.
+4. Track and record the backup tables for future reference
+Manager
+Outcomes Summary
+Parul has completed this task on time with minimal help from Dhimant.
+Employee
+Outcomes Summary
+Backed up all tables.
+Data has been verified and future load has been automated via dags.
+Monitored for accuracy.
+
+
+Goal
+Create below hive tables and schedule airflow job to replicate data in prod for EFA Snowflake migration to EGS:
+AP_PAYMENT_SCHEDULES_ALL 
+AP_INVOICE_DISTRIBUTIONS_ALL
+EXPD_AP_INV_APRVL_HIST_DF
+AP_INVOICE_LINES_ALL
+Actions and Metrics
+1. Successful table creation in egdp.
+2. Validate Data
+3. Schedule data replication in airflow for incremental data.
+Manager
+Outcomes Summary
+Activity completed in H1-2024.
+Parul has adopted the framework built by Rohit to migrate these tables on time. 
+Employee
+Outcomes Summary
+Hive tables created and Airflow job scheduled for EFA Snowflake migration to EGS.
+Data has been tracked and verified.
+
+
+
+
+
+
+Goal
+GitHub Copilot: Developer Deep Dive In-person training
+Actions and Metrics
+Attend the One day in person 4 hours training.
+Leverage generative AI : github copilot tool for development time optimization
+
+
+Manager
+Outcomes Summary
+Activity completed in H1-2024.
+Parul took ownership and created a video on GitHub co-pilot, which we will be socializing once the EFA project is stable.
+Employee
+Outcomes Summary
+Attended GitHub Copilot: Developer Deep Dive training, delivered a session to the team on its usage, and shared the recording for future reference.
+Recorded this demo video showcasing one of the use cases where GitHub Copilot generating Hive Query Language (HQL) to create Apache Iceberg table from corresponding Oracle's Data Definition Language (DDL) by feeding the Oracle DDL as input to Copilot.
+
+Click here to view recording:
+
+
+
+
+Goal
+Hyperian Daily Job Monitoring and Flow understanding of all DQs
+Actions and Metrics
+Track daily if job completed successfully
+Update the email address, slack group and pagerduty email address in the DQ.
+
+
+Manager
+Outcomes Summary
+Parul has taken KT and implemented alerts or notifications.
+Employee
+Outcomes Summary
+Tracking daily runs and updated the email address, slack group and pagerduty email address in the DQ.
+
+
+Goal
+Hyperwallet API Integration
+Actions and Metrics
+Cluster and Hive Table Creation in Test: HOMEAWAY_WALLET_TXN_ACT_DAILY
+Status: Completed
+Excel to CSV Conversion and Addition of New Attributes (HWDataBuild)
+Status: Completed
+Reading CSV and Loading to Hive (DataReadCSV2Hive)
+Status: Code is ready, but we are encountering an error accessing the file on Yarn.
+A thread was initiated with the data processing support team last week: Link to thread, but no resolution has been provided yet.
+I've tried various methods to upload and access the file, but the issue persists.
+Need to confirm column mapping for below column from excel:
+WALLET_NUMBER, MERCHANT_ID, LAST_UPDATE_DATE,LAST_UPDATED_BY
+Loading Data to Oracle and Column Mapping between Oracle Table vs Hive (WriteToOracle)
+Status:
+Connection to the Oracle test instance has been established, and the code is complete.
+A test was performed, but a Null Pointer Exception occurred because the Hive table is currently empty. This should be resolved once the Hive table is populated
+
+
+Manager
+Outcomes Summary
+Some of the parts of this integration are pending, and I hope Parul can complete this task by mid-January. 
+Employee
+Outcomes Summary
+As expected Basic code flow is done before leaving on Vacation and data should be loaded to Oracle test instance once the Yarn file access issue is resolved. Thread initiated and jira created with Data processing team. Handed over to team member to take it forward.
+
+
+
+
+Goal
+Product to Application creation from scratch - End to End (Dataproc with EMR) for efa snowflake migration project.
+Actions and Metrics
+It will involve :
+Understand Backstage new product creation Requirements.  
+Design Spinakker Data Pipeline using correct role and security group.
+Set Up Airflow.
+Define DAGs and Configure Airflow Connections: Define Directed Acyclic Graphs (DAGs) in Airflow. Define tasks within the DAGs to perform specific actions. Set up connections in Airflow to interact with your Dataproc and EMR clusters. This includes configuring connections for authentication and communication,  scheduling information for job run.
+Deploy your data pipeline to a test environment. Ensure that all configurations and dependencies are properly set up.
+Documenting design, configuration, and operational procedures. 
+
+
+Manager
+Outcomes Summary
+Activity completed in H1-2024.
+I agree, Parul has created the initial application setup and airflow instance on time.
+Employee
+Outcomes Summary
+Successfully created and configured product for EFA project: finance-data-products-analytics with all the prerequisites ranging from security group, DL for team, dedicated airflow cluster and so on.
+Also created 3 application under the same product and onboarded them to EMR:
+1. finance-analytics-efa-metadata-etl
+ 2. finance-analytics-efa-fact-dim-etl
+3. finance-analytics-efa-cdc-compaction-etl
+
+
+
+Goal
+Redesign and Streamline the ABE service along with data correction since inception in DRUID and cloverleaf.
+Hand over it to other team by organizing a multiple KT sessions.
+Actions and Metrics
+Identified ABE data gaps since inception, circulated spreadsheet. 
+Established and tested new data source from Cloverleaf to DRUID.
+Removed duplicity in original DRUID ABE source.
+Addressed ABE Cloverleaf data gaps from starting. 
+Documented improvements for continuous service, outlined procedures for future data inconsistencies. 
+Confirmed data accuracy with team on Looker dashboards from November 2023 onward.
+Address DRUID data gaps if any since inception.
+Handover ABE and document walkthrough to Team.
+
+
+Manager
+Outcomes Summary
+Activity completed in H1-2024.
+Parul has helped handle ABE migration to batch processing of missing data and provided KT to the Gurgaon team so they can take it forward.
+I suggest Parul go deeper into understanding the underlying data and domain, which will allow her to be more effective and resolve issues with greater velocity. 
+Employee
+Outcomes Summary
+Identified ABE data gaps since inception and fixed it, Tracked here.
+Redesigned ABE to handle duplicity and prepare design doc.: here
+ Did Improvements and Performance Optimizations for ABE
+ Handed over the ABE and conducted document walkthroughs for the India team through multiple sessions.
+
+
+
+
+Goal
+Stabilization of EFA project including but not limited to Spark job optimization and Pagerduty Integration for monitoring.
+Actions and Metrics
+1. Spark job optimization and parameters tuning.
+2. Addressing data gaps if any and correcting code base.
+3. Pagerduty Integration for monitoring and ensuring health of daily job runs.
+
+
+Manager
+Outcomes Summary
+Parul has performed pager duty integration for all the jobs. I request that Parul continue learning more about spark job parameters and performance tuning to handle such issues independently next time.
+Employee
+Outcomes Summary
+Assisted in cost analysis of several jobs, optimizing them for cost and time reduction through proper
+parameters tuning, and documented and shared my findings here .
+Ensured code quality in specific sections of the repository.
+Implemented PagerDuty integration for monitoring and ensuring the health of daily job runs.
+
+
+
+
+
+Goal
+Test environment setup and vault integration
+Actions and Metrics
+Test environment setup and vault integration for all three repositories.
+Load and verify the data in all test tables.
+Knowledge transfer about test environment and vault to all team members.
+
+
+Manager
+Outcomes Summary
+I agree with Parul.
+Employee
+Outcomes Summary
+Integration Done and KT given to team members. Shared recording to all who didn't make it and uploaded.
+
+
+Self Reflection
+Question
+Question
+Where have you delivered the greatest impact this year? Describe your top achievement.
+Manager
+Answer
+Answer
+I agree with Parul's observation that she had significant exposure to Data Engineering and analysis-related problem statements this year and has picked up well.
+Here is the list of her deliverables at a high level.
+
+EFA Project
+1. Three application and airflow instance setup
+2. Snowflake Table backup - 17
+3. CDC Data Pipelines - 4
+4. FACT Pipeline - 1
+5. Setting up a non-prod environment.
+6. Vault, Pagerduty integration, and setup job parameters to stabilize the cost of all 40+ data pipelines.
+
+Others
+1. Moving ABE from stream-based processing to batch processing
+2. Developing initial code for HW API integration
+Employee
+Answer
+Answer
+My top achievement this year was overcoming limited knowledge in core data engineering, particularly with Dataproc and Spark-based applications. By delivering my goal of Product to Application creation from scratch - End to End, I developed a comprehensive understanding of building and optimizing Spark-based pipelines and applications by creating product and all other requisites from scratch, tuning parameters for both performance and cost efficiency.
+This year was full of challenges, especially in coordinating with team members across different time zones, which often required early mornings and late nights. However, it marked significant growth in my technical skills, particularly in data analysis.
+I honed my ability to identify root causes when data didn’t make it through the pipeline and troubleshoot it to resolve issues.
+I expanded my knowledge in the finance domain, gaining a deeper understanding of finance-related concepts and data.
+
+Question
+Question
+What have you learned this year? Describe one thing you’ll continue doing and one thing that you’ll consider doing differently.
+Manager
+Answer
+Answer
+I concur with Parul's observation and request that she continue gaining a deeper understanding of data and problem statements to deliver. It will allow her to own the component independently. 
+Employee
+Answer
+Answer
+This year, I’ve learned about data engineering, particularly in building and optimizing Spark-based applications and pipelines. I’ve gained valuable experience in tuning parameters for cost efficiency and resolving data pipeline issues, working across time zones, and collaborating with diverse teams. Additionally, I’ve expanded my knowledge in the finance domain, enhancing my understanding of related concepts and data.
+I deepened my understanding of finance-related concepts and data, and will continue to enhance this expertise going forward.
+One thing I’ll consider doing differently is proactively seeking out more in-depth training or mentorship. This will help me in tackling more advanced challenges with greater confidence.
+Manager Assessment
+Manager
+Rating
+Rating
+Consistently Achieves
+Rating Details
+Rating Details
+Parul has had significant exposure to data engineering and analytics this year and got a very good opportunity in Snowflake deprecation project.
+
+She used that opportunity very even though she needed help from others in the team during execution. going forward, she should target to start owning components independently.
