@@ -1,5 +1,5 @@
 ---
-title: Parul's AI Resume
+title: paruls-ai-resume
 emoji: 💼
 colorFrom: indigo
 colorTo: violet
