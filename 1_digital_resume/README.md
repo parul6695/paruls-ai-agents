@@ -12,7 +12,7 @@ license: mit
 
 # Parul's AI Resume
 
-An interactive resume chatbot powered by GPT. Ask about my career, AI engineering projects, skills, and experience — grounded in my summary and LinkedIn profile.
+An interactive resume chatbot. Ask about my career, engineering projects, skills, and experience — grounded in my summary and LinkedIn profile.
 
 ## Example questions
 
