@@ -210,8 +210,8 @@ def create_demo(resume: ResumeApp):
             <div class="hero-header">
                 <h1>Hi, I'm {resume.name} 👋</h1>
                 <p>
-                    Ask me about my background, AI engineering work, and experience building
-                    production agent systems. Leave your email if you'd like to connect.
+                    Ask me about my background, engineering work, and experience building
+                    production systems. Leave your email if you'd like to connect.
                 </p>
             </div>
             """,
