@@ -1,5 +1,5 @@
 ---
-title: SDR Email Generator
+title: sdr-manager
 emoji: 📧
 colorFrom: indigo
 colorTo: purple
@@ -9,3 +9,6 @@ app_file: sdr_manager.py
 pinned: false
 license: mit
 ---
+# SDR Manager
+
+SDR Agent. An instant business application: create Sales Representatives that craft and send professional emails .
