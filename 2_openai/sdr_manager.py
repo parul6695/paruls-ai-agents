@@ -233,13 +233,13 @@ class SdrApp:
 
         for item in result.new_items:
             if isinstance(item, ToolCallItem):
-                call_id = getattr(item.raw_item, "call_id", None)
-                name = getattr(item.raw_item, "name", None)
+                call_id = item.call_id
+                name = item.tool_name
                 if call_id and name:
                     call_names[call_id] = name
             elif isinstance(item, ToolCallOutputItem):
-                call_id = getattr(item.raw_item, "call_id", None)
-                tool_name = call_names.get(call_id, "")
+                call_id = item.call_id
+                tool_name = call_names.get(call_id or "", "")
                 if tool_name:
                     outputs[tool_name] = str(item.output)
 
