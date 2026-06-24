@@ -19,14 +19,15 @@ SENDER = {
     "name": os.getenv("SENDER_NAME", "Priya Printers"),
     "title": os.getenv("SENDER_TITLE", "Head of Business Development"),
     "company": os.getenv("SENDER_COMPANY", "Priya Printers"),
-    "email": os.getenv("SENDER_EMAIL", "sales@priyaprinters.com"),
+    "email": os.getenv("SENDER_EMAIL", "priyaprinters88@gmail.com"),
     "phone": os.getenv("SENDER_PHONE", ""),
     "website": "https://www.priyaprinters.com/",
 }
 
 # Must be a SendGrid-verified sender on your own domain (not gmail/yahoo).
 # Using a free-provider address here is the main reason Gmail shows "via sendgrid.net" and files mail as spam.
-SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", SENDER["email"])
+SENDGRID_FROM_EMAIL = "sales@priyaprinters.com"
+# os.getenv("SENDGRID_FROM_EMAIL", SENDER["email"])
 
 ANTI_SPAM_SUBJECT_RULES = """
 Write a short, plain subject line (under 60 characters) that sounds like a real person wrote it.
