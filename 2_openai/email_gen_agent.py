@@ -11,7 +11,7 @@ from sendgrid.helpers.mail import Content, Email, Mail, To
 load_dotenv(override=True)
 
 SENDER = {
-    "name": os.getenv("SENDER_NAME", "Rahul Gupta"),
+    "name": os.getenv("SENDER_NAME", "Priya Printers"),
     "title": os.getenv("SENDER_TITLE", "Head of Business Development"),
     "company": os.getenv("SENDER_COMPANY", "Priya Printers"),
     "email": os.getenv("SENDER_EMAIL", "priyaprinters88@gmail.com"),
