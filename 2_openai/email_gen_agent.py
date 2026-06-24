@@ -1,14 +1,19 @@
 import os
 import re
+import warnings
 from typing import Dict
 
 import sendgrid
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
 from agents import Agent, OpenAIChatCompletionsModel, function_tool
-from sendgrid.helpers.mail import Content, Email, Mail, To
+from sendgrid.helpers.mail import Content, Email, Mail, ReplyTo, To
 
 load_dotenv(override=True)
+
+FREE_EMAIL_DOMAINS = frozenset(
+    {"gmail.com", "googlemail.com", "yahoo.com", "hotmail.com", "outlook.com", "live.com"}
+)
 
 SENDER = {
     "name": os.getenv("SENDER_NAME", "Priya Printers"),
@@ -18,6 +23,27 @@ SENDER = {
     "phone": os.getenv("SENDER_PHONE", ""),
     "website": "https://www.priyaprinters.com/",
 }
+
+# Must be a SendGrid-verified sender on your own domain (not gmail/yahoo).
+# Using a free-provider address here is the main reason Gmail shows "via sendgrid.net" and files mail as spam.
+SENDGRID_FROM_EMAIL = os.getenv("SENDGRID_FROM_EMAIL", SENDER["email"])
+
+ANTI_SPAM_SUBJECT_RULES = """
+Write a short, plain subject line (under 60 characters) that sounds like a real person wrote it.
+- Use sentence case, not Title Case Every Word
+- No exclamation marks, no ALL CAPS, no emojis
+- Avoid spam phrases: "Elevate", "Unlock", "Transform", "Revolutionize", "Don't miss", "Limited time", "Act now", "Custom Solutions", "Boost your"
+- Prefer specific and understated: "packaging question for {company}", "print partner for {company}", "quick note — Priya Printers"
+"""
+
+ANTI_SPAM_BODY_RULES = """
+Write like one person emailing another — not a marketing blast.
+- 3–5 short paragraphs max; plain language, no hype or superlatives
+- One clear, low-pressure ask (e.g. open to a 10-minute call?)
+- No bullet lists of product features unless the recipient asked
+- End with a real signature using the sender details provided
+- Include one line: "If this isn't relevant, just reply and I won't follow up."
+"""
 
 
 def sender_instructions_block() -> str:
@@ -40,7 +66,35 @@ def clean_subject(subject: str) -> str:
         return subject
     cleaned = subject.strip().strip("`")
     cleaned = re.sub(r"^(?:\*\*)?Subject(?:\*\*)?:\s*", "", cleaned, flags=re.IGNORECASE)
+    cleaned = cleaned.strip().strip('"').strip("'")
+    cleaned = re.sub(r"!+$", "", cleaned).strip()
+    cleaned = re.sub(
+        r"\b(elevate|unlock|transform|revolutionize|boost|supercharge)\b",
+        "",
+        cleaned,
+        flags=re.IGNORECASE,
+    )
+    cleaned = re.sub(r"\s{2,}", " ", cleaned).strip(" -—")
+    if cleaned and cleaned == cleaned.upper() and len(cleaned) > 4:
+        cleaned = cleaned.capitalize()
     return cleaned.strip()
+
+
+def _from_domain(email: str) -> str:
+    return email.rsplit("@", 1)[-1].lower().strip()
+
+
+def _warn_if_risky_from_address() -> None:
+    domain = _from_domain(SENDGRID_FROM_EMAIL)
+    if domain in FREE_EMAIL_DOMAINS:
+        warnings.warn(
+            f"SENDGRID_FROM_EMAIL is {SENDGRID_FROM_EMAIL!r}. Gmail/Yahoo addresses sent through "
+            "SendGrid fail DMARC and usually land in spam (shown as 'via sendgrid.net'). "
+            "Authenticate priyaprinters.com in SendGrid and set SENDGRID_FROM_EMAIL to e.g. "
+            "sales@priyaprinters.com.",
+            UserWarning,
+            stacklevel=3,
+        )
 
 
 def clean_html_body(html_body: str) -> str:
@@ -99,14 +153,18 @@ def apply_sender_details(text: str, recipient_email: str = "") -> str:
 
 
 def deliver_email(subject: str, html_body: str, to_email: str) -> Dict[str, str]:
+    _warn_if_risky_from_address()
+
     subject = clean_subject(apply_sender_details(subject, to_email))
     html_body = clean_html_body(apply_sender_details(html_body, to_email))
     plain_body = html_to_plain_text(html_body)
 
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
-    from_email = Email(SENDER["email"], SENDER["name"])
+    from_email = Email(SENDGRID_FROM_EMAIL, SENDER["name"])
     to = To(to_email)
     mail = Mail(from_email, to, subject)
+    if SENDGRID_FROM_EMAIL.lower() != SENDER["email"].lower():
+        mail.reply_to = ReplyTo(SENDER["email"], SENDER["name"])
     mail.add_content(Content("text/plain", plain_body))
     mail.add_content(Content("text/html", html_body))
     sg.client.mail.send.post(request_body=mail.get())
@@ -138,14 +196,17 @@ def email_gen_agent():
     )
     instructions1 = f"""You are a sales agent working for Priya Printers. {company_blurb}
     You write professional, serious cold emails.
+    {ANTI_SPAM_BODY_RULES}
     {sender_block}
   """
     instructions2 = f"""You are a humorous, engaging sales agent working for Priya Printers. {company_blurb}
-    You write witty, engaging cold emails that are likely to get a response.
+    You write witty, engaging cold emails that are likely to get a response — still human and understated, never gimmicky or salesy.
+    {ANTI_SPAM_BODY_RULES}
     {sender_block}
   """
     instructions3 = f"""You are a busy sales agent working for Priya Printers. {company_blurb}
     You write concise, to the point cold emails.
+    {ANTI_SPAM_BODY_RULES}
     {sender_block}
   """
     OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
@@ -178,11 +239,15 @@ def email_gen_agent():
         # "sales_agent3": sales_agent3,
     }
 
-    subject_instructions = "You can write a subject for a cold sales email. \
-    You are given a message and you need to write a subject for an email that is likely to get a response."
+    subject_instructions = (
+        "You write the subject line for a one-to-one B2B cold email. "
+        "Return only the subject text — no label, quotes, or punctuation spam.\n"
+        f"{ANTI_SPAM_SUBJECT_RULES}"
+    )
 
     html_instructions = f"""You convert a text email body to an HTML email body.
-    Use a simple, clear, compelling layout. Include a footer with the sender's real name, title, company, and contact details.
+    Use a simple, clear layout — no heavy marketing banners, gradient buttons, or stock-photo styling.
+    Include a footer with the sender's real name, title, company, and contact details.
     Never use bracket placeholders — use the sender details below.
     Return raw HTML only. Do not wrap the output in markdown code fences like ```html or '''html.
     {sender_block}

@@ -157,6 +157,8 @@ class SdrApp:
         prompt = (
             f"Desired tone: {tone}\n\n"
             "Pick the single best cold email draft below. "
+            "Prefer the draft that sounds most like a real person (not a marketing blast): "
+            "specific, short, low-pressure, no hype or spammy phrases. "
             "Return only the winning email body text.\n\n"
             + "\n\n".join(sections)
         )
