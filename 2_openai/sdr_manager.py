@@ -15,7 +15,14 @@ from agents import (
 )
 from agents.items import ToolCallItem, ToolCallOutputItem
 
-from email_gen_agent import apply_sender_details, deliver_email, email_gen_agent, sender_instructions_block
+from email_gen_agent import (
+    apply_sender_details,
+    clean_html_body,
+    clean_subject,
+    deliver_email,
+    email_gen_agent,
+    sender_instructions_block,
+)
 
 load_dotenv(override=True)
 
@@ -167,11 +174,19 @@ class SdrApp:
         subject = ""
         html_body = ""
 
-        html_match = re.search(r"```html\s*\n(.*?)```", text, re.DOTALL | re.IGNORECASE)
+        html_match = re.search(
+            r"(?:```|''')html\s*\n(.*?)(?:```|''')",
+            text,
+            re.DOTALL | re.IGNORECASE,
+        )
         if html_match:
             html_body = html_match.group(1).strip()
         else:
-            tag_match = re.search(r"(<(?:html|body|div|p|table)\b.*)", text, re.DOTALL | re.IGNORECASE)
+            tag_match = re.search(
+                r"(<(?:html|body|div|p|table|!DOCTYPE)\b.*)",
+                text,
+                re.DOTALL | re.IGNORECASE,
+            )
             if tag_match:
                 html_body = tag_match.group(1).strip()
 
@@ -196,8 +211,8 @@ class SdrApp:
         html_body: str,
         recipient_email: str,
     ) -> dict[str, str]:
-        subject = apply_sender_details(subject, recipient_email)
-        html_body = apply_sender_details(html_body, recipient_email)
+        subject = clean_subject(apply_sender_details(subject, recipient_email))
+        html_body = clean_html_body(apply_sender_details(html_body, recipient_email))
         return {"subject": subject.strip(), "html_body": html_body.strip()}
 
     @staticmethod

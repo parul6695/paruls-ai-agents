@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Dict
 
 import sendgrid
@@ -34,6 +35,49 @@ Never use bracket placeholders like [Your Name] or [Your Contact Information].
 """
 
 
+def clean_subject(subject: str) -> str:
+    if not subject:
+        return subject
+    cleaned = subject.strip().strip("`")
+    cleaned = re.sub(r"^(?:\*\*)?Subject(?:\*\*)?:\s*", "", cleaned, flags=re.IGNORECASE)
+    return cleaned.strip()
+
+
+def clean_html_body(html_body: str) -> str:
+    if not html_body:
+        return html_body
+
+    text = html_body.strip()
+    fence_match = re.search(
+        r"^(?:```|''')(?:html)?\s*\n?(.*?)(?:\n?(?:```|'''))?\s*$",
+        text,
+        re.DOTALL | re.IGNORECASE,
+    )
+    if fence_match:
+        text = fence_match.group(1).strip()
+
+    text = re.sub(r"^(?:```|''')html\s*\n?", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"\n?(?:```|''')\s*$", "", text)
+
+    tag_match = re.search(r"(<(?:html|body|div|p|table|!DOCTYPE)\b.*)", text, re.DOTALL | re.IGNORECASE)
+    if tag_match:
+        text = tag_match.group(1).strip()
+
+    return text.strip()
+
+
+def html_to_plain_text(html_body: str) -> str:
+    if not html_body:
+        return html_body
+
+    text = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", html_body, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<br\s*/?>", "\n", text, flags=re.IGNORECASE)
+    text = re.sub(r"</p>", "\n\n", text, flags=re.IGNORECASE)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text.strip()
+
+
 def apply_sender_details(text: str, recipient_email: str = "") -> str:
     if not text:
         return text
@@ -55,12 +99,17 @@ def apply_sender_details(text: str, recipient_email: str = "") -> str:
 
 
 def deliver_email(subject: str, html_body: str, to_email: str) -> Dict[str, str]:
+    subject = clean_subject(apply_sender_details(subject, to_email))
+    html_body = clean_html_body(apply_sender_details(html_body, to_email))
+    plain_body = html_to_plain_text(html_body)
+
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
-    from_email = Email(SENDER["email"])
+    from_email = Email(SENDER["email"], SENDER["name"])
     to = To(to_email)
-    content = Content("text/html", html_body)
-    mail = Mail(from_email, to, subject, content).get()
-    sg.client.mail.send.post(request_body=mail)
+    mail = Mail(from_email, to, subject)
+    mail.add_content(Content("text/plain", plain_body))
+    mail.add_content(Content("text/html", html_body))
+    sg.client.mail.send.post(request_body=mail.get())
     return {"status": "success"}
 
 
@@ -134,6 +183,7 @@ def email_gen_agent():
     html_instructions = f"""You convert a text email body to an HTML email body.
     Use a simple, clear, compelling layout. Include a footer with the sender's real name, title, company, and contact details.
     Never use bracket placeholders — use the sender details below.
+    Return raw HTML only. Do not wrap the output in markdown code fences like ```html or '''html.
     {sender_block}
     """
 
