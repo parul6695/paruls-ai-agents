@@ -1,3 +1,4 @@
+import asyncio
 import os
 import re
 from typing import Any
@@ -5,14 +6,7 @@ from typing import Any
 import gradio as gr
 from dotenv import load_dotenv
 from pydantic import BaseModel
-from agents import (
-    Agent,
-    Runner,
-    trace,
-    input_guardrail,
-    GuardrailFunctionOutput,
-    InputGuardrailTripwireTriggered,
-)
+from agents import Agent, Runner, trace
 from agents.items import ToolCallItem, ToolCallOutputItem
 
 from email_gen_agent import (
@@ -82,31 +76,13 @@ class InputGuardrailOutput(BaseModel):
 
 class SdrApp:
     def __init__(self) -> None:
-        self.sales_manager = self._build_sales_manager()
+        self.sales_agents, self.emailer_agent = email_gen_agent()
+        self.guardrail_agent = self._build_guardrail_agent()
+        self.picker_agent = self._build_picker_agent()
 
-    def _build_sales_manager(self) -> Agent:
-        sales_manager_instructions = f"""
-        You are a Sales Manager at Priya Printers. Your goal is to find the single best cold sales email using the sales_agent tools.
-
-        {sender_instructions_block()}
-
-        Follow these steps carefully:
-        1. Generate Drafts: Use all sales_agent tools to generate different email drafts. Do not proceed until all drafts from given tools are ready.
-
-        2. Evaluate and Select: Review the drafts and choose the single best email using your judgment of which one is most effective.
-
-        3. Handoff for Formatting: Pass ONLY the winning email draft to the 'Email Manager' agent. The Email Manager will format it with a subject line and HTML body.
-
-        Crucial Rules:
-        - Call each sales_agent tool exactly once. Do not retry.
-        - Immediately hand off the best draft to Email Manager — do not ask the user for confirmation.
-        - You must use the sales agent tools to generate the drafts — do not write them yourself.
-        - You must hand off exactly ONE email to the Email Manager — never more than one.
-        - Do not send the email. Formatting only.
-        - Do not add action items or tell the user to fill in placeholders — sender details are already provided.
-        """
-
-        guardrail_agent = Agent(
+    @staticmethod
+    def _build_guardrail_agent() -> Agent:
+        return Agent(
             name="Input abuse check",
             instructions="""
             You guard inputs to a cold sales email generator. Block abuse and spam; allow normal B2B outreach parameters.
@@ -131,24 +107,61 @@ class SdrApp:
             model="gpt-4o-mini",
         )
 
-        @input_guardrail
-        async def guardrail_against_abuse(ctx, agent, agent_input):
-            result = await Runner.run(guardrail_agent, agent_input, context=ctx.context)
-            should_block = result.final_output.should_block
-            return GuardrailFunctionOutput(
-                output_info={"blocked_input": result.final_output},
-                tripwire_triggered=should_block,
-            )
-
-        tools, handoffs = email_gen_agent()
+    @staticmethod
+    def _build_picker_agent() -> Agent:
         return Agent(
-            name="Sales Manager",
-            instructions=sales_manager_instructions,
-            tools=tools,
-            handoffs=handoffs,
+            name="Draft Picker",
+            instructions=(
+                "You review multiple cold sales email drafts and pick the single best one. "
+                "Return only the full text of the winning draft — no labels, commentary, or markdown fences."
+            ),
             model="gpt-4o-mini",
-            input_guardrails=[guardrail_against_abuse],
         )
+
+    async def _run_guardrail(self, message: str) -> str | None:
+        result = await Runner.run(self.guardrail_agent, message)
+        if result.final_output.should_block:
+            return result.final_output.info or "input flagged as abusive or spam"
+        return None
+
+    async def _generate_drafts_parallel(self, message: str) -> dict[str, str]:
+        names_and_agents = list(self.sales_agents.items())
+        results = await asyncio.gather(
+            *[Runner.run(agent, message) for _, agent in names_and_agents],
+            return_exceptions=True,
+        )
+
+        drafts: dict[str, str] = {}
+        for (name, _), result in zip(names_and_agents, results):
+            if isinstance(result, Exception):
+                drafts[name] = f"_Error generating draft: {result}_"
+            else:
+                drafts[name] = str(result.final_output or "").strip()
+        return drafts
+
+    async def _pick_best_draft(self, drafts: dict[str, str], tone: str) -> str:
+        sections = []
+        for name, body in drafts.items():
+            if not body or body.startswith("_Error"):
+                continue
+            label = AGENT_LABELS.get(name, name)
+            sections.append(f"--- {label} ---\n{body}")
+
+        if not sections:
+            raise ValueError("All draft agents failed — check API keys and try again.")
+        if len(sections) == 1:
+            for body in drafts.values():
+                if body and not body.startswith("_Error"):
+                    return body
+
+        prompt = (
+            f"Desired tone: {tone}\n\n"
+            "Pick the single best cold email draft below. "
+            "Return only the winning email body text.\n\n"
+            + "\n\n".join(sections)
+        )
+        result = await Runner.run(self.picker_agent, prompt)
+        return str(result.final_output or "").strip()
 
     @staticmethod
     def _build_message(recipient: str, company: str, tone: str) -> str:
@@ -291,20 +304,38 @@ class SdrApp:
 
         try:
             with trace("SDR Email Generator"):
-                result = await Runner.run(self.sales_manager, message)
-        except InputGuardrailTripwireTriggered as e:
-            blocked = e.guardrail_result.output.output_info.get("blocked_input")
-            reason = getattr(blocked, "info", str(blocked))
+                block_reason = await self._run_guardrail(message)
+                if block_reason:
+                    return (
+                        "_Blocked by guardrail._",
+                        "",
+                        f"Blocked: {block_reason}",
+                        {"subject": "", "html_body": "", "to_email": recipient_email},
+                    )
+
+                drafts = await self._generate_drafts_parallel(message)
+                winning_draft = await self._pick_best_draft(drafts, tone)
+                format_result = await Runner.run(self.emailer_agent, winning_draft)
+        except ValueError as exc:
             return (
-                "_Blocked by guardrail._",
+                "_Draft generation failed._",
                 "",
-                f"Blocked: input flagged as abusive or spam ({reason})",
+                str(exc),
+                {"subject": "", "html_body": "", "to_email": recipient_email},
+            )
+        except Exception as exc:
+            return (
+                "_Generation failed._",
+                "",
+                f"Error: {exc}",
                 {"subject": "", "html_body": "", "to_email": recipient_email},
             )
 
-        outputs = self._extract_tool_outputs(result)
+        outputs = {**drafts, **self._extract_tool_outputs(format_result)}
         drafts_md = self._format_drafts(outputs)
-        final_md, email_payload = self._format_final(outputs, result.final_output, recipient_email)
+        final_md, email_payload = self._format_final(
+            outputs, format_result.final_output, recipient_email
+        )
         email_payload["to_email"] = recipient_email
         status = "Drafts generated. Review the final email, then click **Send** when ready."
         return drafts_md, final_md, status, email_payload

@@ -171,11 +171,12 @@ def email_gen_agent():
     sales_agent2 = Agent(name="OpenRouter Sales Agent", instructions=instructions2, model=openrouter_model)
     sales_agent3 = Agent(name="Gemini Sales Agent", instructions=instructions3, model=gemini_model)
 
-    description = "Write a cold sales email"
-
-    tool1 = sales_agent1.as_tool(tool_name="sales_agent1", tool_description=description)
-    tool2 = sales_agent2.as_tool(tool_name="sales_agent2", tool_description=description)
-    tool3 = sales_agent3.as_tool(tool_name="sales_agent3", tool_description=description)
+    sales_agents = {
+        "sales_agent1": sales_agent1,
+        "sales_agent2": sales_agent2,
+        # Add sales_agent3 once you have a paid Gemini subscription.
+        # "sales_agent3": sales_agent3,
+    }
 
     subject_instructions = "You can write a subject for a cold sales email. \
     You are given a message and you need to write a subject for an email that is likely to get a response."
@@ -208,14 +209,9 @@ def email_gen_agent():
         instructions=instructions,
         tools=email_tools,
         model="gpt-4o-mini",
-        handoff_description="Convert an email to HTML with a subject line",
     )
-    
-    #Add tool3 once you have paid subscription to gemini models
-    # tools = [tool1,tool2,tool3]
-    tools = [tool1,tool2]
-    handoffs = [emailer_agent]
-    return tools,handoffs
+
+    return sales_agents, emailer_agent
 
 
 
