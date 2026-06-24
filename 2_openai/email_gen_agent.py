@@ -19,7 +19,7 @@ SENDER = {
     "name": os.getenv("SENDER_NAME", "Priya Printers"),
     "title": os.getenv("SENDER_TITLE", "Head of Business Development"),
     "company": os.getenv("SENDER_COMPANY", "Priya Printers"),
-    "email": os.getenv("SENDER_EMAIL", "priyaprinters88@gmail.com"),
+    "email": os.getenv("SENDER_EMAIL", "sales@priyaprinters.com"),
     "phone": os.getenv("SENDER_PHONE", ""),
     "website": "https://www.priyaprinters.com/",
 }
